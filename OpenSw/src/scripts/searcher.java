@@ -192,9 +192,16 @@ public class searcher {
 			}
 			System.out.println(result);
 		}
-		
-		
 
+	}
+	
+	
+	
+	private Double InnerProduct() { 
+		
+		
+		return 0.0;
+		
 	}
 
 	private Double tf(String x, String body, Integer tfxy,Integer dfx) {
