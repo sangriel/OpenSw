@@ -170,11 +170,7 @@ public class searcher {
 			}
 			count += 1;
 		}
-		
-		System.out.println(keywords.length);
-		System.out.println(indexRootSums.size());
-		System.out.println(innerProduct.length);
-		
+	
 		
 		for (int i = 0 ; i < keywords.length ; i++) { 
 			weights.add(innerProduct[i] / ((keywordRootSums) * (indexRootSums.get(i))));
