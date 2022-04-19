@@ -79,8 +79,10 @@ public class searcher {
 			weights.add(tf(keyWords.get(i) , searchQuestion, keyWordsCount.get(i),dfx));
 		}
 		
-		this.calcSim(keyWords.toArray(new String[keyWords.size()]), weights.toArray(new Double[weights.size()]));
+		Double[] innerProduct = this.InnerProduct(keyWords.toArray(new String[keyWords.size()]), weights.toArray(new Double[weights.size()]));
 		
+		
+		this.calcSim(keyWords.toArray(new String[keyWords.size()]), weights.toArray(new Double[weights.size()]), innerProduct);
 
 
 		return;
@@ -139,32 +141,43 @@ public class searcher {
 		}
 	}
 
-	private void calcSim(String[] keywords, Double[] keywordWeights) {
+	private void calcSim(String[] keywords, Double[] keywordWeights, Double[] innerProduct ) {
 
 		ArrayList<Double> weights = new ArrayList<Double>();
-		for (int i = 0 ; i < titleArr.size() ; i++) { 
-			weights.add(0.0);
+		
+		Double keywordRootSums = 0.0;
+		
+		for (int i = 0 ; i < keywordWeights.length ; i ++) { 
+			keywordRootSums += keywordWeights[i]*keywordWeights[i];
 		}
-
-		ArrayList<Double> results = new ArrayList<Double>();
+		keywordRootSums = Math.sqrt(keywordRootSums);
+		
+		ArrayList<Double> indexRootSums = new ArrayList<Double>();
+		
+		int count = 0;
 		for (int i = 0; i < keywords.length; i++) {
-			int count = 0;
+			indexRootSums.add(0.0);
 			String values = this.indexPost.get(keywords[i]);
-			if (values == null) { 
-				
-			}
-			else { 
+			if (values != null) { 
 				StringTokenizer parsedst = new StringTokenizer(values, " ");
 				
 				while (parsedst.hasMoreTokens()) {
 					String token = parsedst.nextToken();
 					Double value = Double.parseDouble(token.substring(3, token.length() - 1));
-					
-					weights.set(count, weights.get(count) +  (value * keywordWeights[i]));
-					count +=1;
+					indexRootSums.set(count,indexRootSums.get(count) + (value*value));
 				}
+				indexRootSums.set(count, Math.sqrt(indexRootSums.get(count)));
 			}
-			
+			count += 1;
+		}
+		
+		System.out.println(keywords.length);
+		System.out.println(indexRootSums.size());
+		System.out.println(innerProduct.length);
+		
+		
+		for (int i = 0 ; i < keywords.length ; i++) { 
+			weights.add(innerProduct[i] / ((keywordRootSums) * (indexRootSums.get(i))));
 		}
 		
 		
@@ -197,10 +210,36 @@ public class searcher {
 	
 	
 	
-	private Double InnerProduct() { 
+	private Double[] InnerProduct(String[] keywords, Double[] keywordWeights) { 
+		
+		ArrayList<Double> weights = new ArrayList<Double>();
+		for (int i = 0 ; i < titleArr.size() ; i++) { 
+			weights.add(0.0);
+		}
+
+		for (int i = 0; i < keywords.length; i++) {
+			int count = 0;
+			String values = this.indexPost.get(keywords[i]);
+			if (values == null) { 
+				
+			}
+			else { 
+				StringTokenizer parsedst = new StringTokenizer(values, " ");
+				
+				while (parsedst.hasMoreTokens()) {
+					String token = parsedst.nextToken();
+					Double value = Double.parseDouble(token.substring(3, token.length() - 1));
+					
+					weights.set(count, weights.get(count) +  (value * keywordWeights[i]));
+					count +=1;
+				}
+			}
+			
+		}
 		
 		
-		return 0.0;
+		return weights.toArray(new Double[weights.size()]);
+		
 		
 	}
 
