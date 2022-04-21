@@ -36,6 +36,15 @@ public class kuir {
 			}
 			
 		}
+		else if (command.equals("-m")) { 
+			if (args.length < 4) { 
+				System.out.println("명령어를 잘 못 입력하셨습니다.");
+			}
+			else { 
+				String question = args[3];
+				MidTerm midterm = new MidTerm(path,question);
+			}
+		}
 	}
 
 }
