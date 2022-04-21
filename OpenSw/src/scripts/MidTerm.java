@@ -59,10 +59,6 @@ public class MidTerm {
 		this.input_file = path;
 		this.question = question;
 		questionExtracted = extractor(question);
-		
-		System.out.println("size" + questionExtracted.size());
-	for ( int i = 0 ; i < questionExtracted.size(); i++) { 
-	}
 		showSnippet();
 		
 	}
