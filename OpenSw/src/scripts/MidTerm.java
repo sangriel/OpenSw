@@ -39,6 +39,8 @@ public class MidTerm {
 
 	private String input_file;
 	private String question;
+	private ArrayList<String> questionExtracted = new ArrayList<String>();
+	
 	
 
 	private File[] makeFileList(String path) {
@@ -56,6 +58,11 @@ public class MidTerm {
 	public MidTerm(String path,String question) {
 		this.input_file = path;
 		this.question = question;
+		questionExtracted = extractor(question);
+		
+		System.out.println("size" + questionExtracted.size());
+	for ( int i = 0 ; i < questionExtracted.size(); i++) { 
+	}
 		showSnippet();
 		
 	}
@@ -72,7 +79,7 @@ public class MidTerm {
 		
 		for (int j = 0; j < kl.size(); j++) {
 			Keyword kwrd = kl.get(j);
-			result.add(kwrd + "");
+			result.add(kwrd.getString());
 		}
 		
 		
@@ -127,8 +134,10 @@ public class MidTerm {
 					ArrayList<String> extracted = this.extractor(parsed);
 					int matchpoint = 0;
 					for (int j = 0 ; j < extracted.size(); j ++) { 
-						if (extracted.get(j).contains(this.question)) { 
-							matchpoint += 1;
+						for (int q = 0 ; q < questionExtracted.size();q++) {
+							if (extracted.get(j).contains(this.questionExtracted.get(q))) { 
+								matchpoint += 1;
+							}
 						}
 					}
 					
