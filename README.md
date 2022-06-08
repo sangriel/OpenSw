@@ -12,4 +12,5 @@
   `java -cp ./jars/jsoup-1.14.3.jar:./jars/kkma-2.1.jar:bin scripts.kuir -k ./collection.xml`
 ## 명령어 실행  (4주차)
   `java -cp ./jars/jsoup-1.14.3.jar:./jars/kkma-2.1.jar:bin scripts.kuir -i ./index.xml`
-  
+## 명령어 실행  (15주차) 네이버 오픈 API
+  `java -cp ./jars/jsoup-1.14.3.jar:./jars/kkma-2.1.jar:./jars/json-simple-1.1.1.jar:bin scripts.kuir -naver king`
