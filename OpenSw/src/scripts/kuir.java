@@ -45,6 +45,14 @@ public class kuir {
 				MidTerm midterm = new MidTerm(path,question);
 			}
 		}
+		else if (command.equals("-naver")) { 
+			for (int i = 0 ; i< args.length ; i++) { 
+				System.out.println(args[i]);
+			}
+			
+			String question = args[1];
+			naverOpenAPI naver = new naverOpenAPI(question);
+			naver.makeNetworkCall();
+		}
 	}
-
 }
